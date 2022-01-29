@@ -63,7 +63,7 @@ public sealed class Weight : Transformation
     {
         if (IsAbilityEnabled)
         {
-            _weighingDownObj.ControlledMove(MousePlayer.GetComponent<Rigidbody>().velocity.y * 2.5f * Time.deltaTime);
+            _weighingDownObj.ControlledMove(-2.5f * Time.deltaTime);
 
             Vector3 pos = MousePlayer.transform.position;
             pos.x = _lockX;
