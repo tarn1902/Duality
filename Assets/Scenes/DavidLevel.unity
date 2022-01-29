@@ -301,8 +301,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd717c2e22920b41baf4cb091d48085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <MousePlayer>k__BackingField: {fileID: 1560701334}
-  <KeyboardPlayer>k__BackingField: {fileID: 1805341336}
 --- !u!4 &1281887480
 Transform:
   m_ObjectHideFlags: 0
@@ -638,6 +636,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 810095171810245991, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 3.8562584e-10
+      objectReference: {fileID: 0}
+    - target: {fileID: 810095171810245991, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.21048854
+      objectReference: {fileID: 0}
+    - target: {fileID: 810095171810245991, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: -0.0029092897
+      objectReference: {fileID: 0}
     - target: {fileID: 5212012172476948914, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
       propertyPath: m_Name
       value: KeyboardPlayer
@@ -685,6 +695,30 @@ PrefabInstance:
     - target: {fileID: 5212012172476948917, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7630434453089280693, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.00000018527805
+      objectReference: {fileID: 0}
+    - target: {fileID: 7630434453089280693, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.28647462
+      objectReference: {fileID: 0}
+    - target: {fileID: 7630434453089280693, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.012277605
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552797245296036911, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0.000000029802315
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552797245296036911, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0.12496886
+      objectReference: {fileID: 0}
+    - target: {fileID: 8552797245296036911, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_ConnectedAnchor.z
+      value: 0.000000081956365
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
@@ -761,17 +795,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f74087bc06b75ed4389044af15fc8f9b, type: 3}
---- !u!114 &1560701334 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1220749842777724770, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
-  m_PrefabInstance: {fileID: 1336230583}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5c64c2ff6cb0234fa1c118f24486ada, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1744443882
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,17 +877,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1805341336 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5212012172476948913, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
-  m_PrefabInstance: {fileID: 1447411514}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7fac040b6a3f5546bbcddc5d900bd07, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1907343207
 GameObject:
   m_ObjectHideFlags: 0

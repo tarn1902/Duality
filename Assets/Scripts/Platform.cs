@@ -7,7 +7,7 @@ public sealed class Platform : Transformation
 
     private float _fallSpeed;
 
-    private bool _doKick;
+    private bool _playerWasOnPlatform;
 
     private Tween _kickTween;
 
@@ -22,6 +22,9 @@ public sealed class Platform : Transformation
 
     [field: SerializeField]
     public float MaxAccel { get; private set; } = 20f;
+
+    [field: SerializeField]
+    public float KickbackRequiredVel { get; private set; } = 0.05f;
 
     [field: SerializeField]
     public float KickbackDistance { get; private set; } = 2.5f;
@@ -61,21 +64,29 @@ public sealed class Platform : Transformation
             {
                 MousePlayer.IsMovementDisabled = true;
                 MousePlayer.GetComponent<Collider>().isTrigger = false;
-                _doKick = true;
+                _playerWasOnPlatform = true;
             }
 
             // Move down under weight
             _fallSpeed = Mathf.Min(MaxAccel, _fallSpeed + (Accel * Time.deltaTime));
             MousePlayer.GetComponent<Rigidbody>().MovePosition(MousePlayer.transform.position + Vector3.down * _fallSpeed * Time.deltaTime);
         }
-        else if (_doKick)
+        else if (_playerWasOnPlatform)
         {
             MousePlayer.GetComponent<Collider>().isTrigger = true;
             _fallSpeed = 0f;
-            _doKick = false;
+            _playerWasOnPlatform = false;
 
-            _kickTween?.Stop();
-            _kickTween = MousePlayer.transform.TweenY(MousePlayer.transform.position.y, MousePlayer.transform.position.y - KickbackDistance, KickbackDuration, KickbackAnimation.GetEasingFunction(), true, null, () => MousePlayer.IsMovementDisabled = false);
+            CharacterController cc = GameManager.Instance.KeyboardPlayer.GetComponent<CharacterController>();
+            if (cc.velocity.y > KickbackRequiredVel)
+            {
+                _kickTween?.Stop();
+                _kickTween = MousePlayer.transform.TweenY(MousePlayer.transform.position.y, MousePlayer.transform.position.y - KickbackDistance, KickbackDuration, KickbackAnimation.GetEasingFunction(), true, null, () => MousePlayer.IsMovementDisabled = false);
+            }
+            else
+            {
+                MousePlayer.IsMovementDisabled = false;
+            }
         }
     }
 
