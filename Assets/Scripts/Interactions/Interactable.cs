@@ -69,6 +69,10 @@ public abstract class Interactable : MonoBehaviour
 
     #region Methods
 
+    /// <summary>
+    ///     Attempt to start a mouse interaction if allowed.
+    /// </summary>
+    /// <returns></returns>
     public bool StartMouseInteraction()
     {
         if (IsMouseInteracting || !IsMouseAllowed)
@@ -82,6 +86,10 @@ public abstract class Interactable : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    ///     End a mouse interaction.
+    /// </summary>
+    /// <returns></returns>
     public bool EndMouseInteraction()
     {
         if (!IsMouseInteracting)
@@ -95,6 +103,10 @@ public abstract class Interactable : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    ///     Attempt to start a keyboard interaction if allowed.
+    /// </summary>
+    /// <returns></returns>
     public bool StartKeyboardInteraction()
     {
         if (IsKeyboardInteracting || !IsKeyboardAllowed)
@@ -108,6 +120,10 @@ public abstract class Interactable : MonoBehaviour
         return true;
     }
 
+    /// <summary>
+    ///  End a keyboard interaction.
+    /// </summary>
+    /// <returns></returns>
     public bool EndKeyboardInteraction()
     {
         if (!IsKeyboardInteracting)
