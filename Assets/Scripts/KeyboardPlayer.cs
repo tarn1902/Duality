@@ -31,16 +31,16 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     {
         if (!isRagdoll)
         {
-            if (transform.position.y < -deathFallDistance)
-                RagdollOn();
-
             if (cc.isGrounded)
             {
                 if (Input.GetButtonDown("Jump"))
                     movingDirection.y = jumpSpeed;
             }
-
-            movingDirection.y -= gravity * Time.deltaTime;
+            else
+            {
+                movingDirection.y -= gravity * Time.deltaTime;
+            }
+            
             movingDirection.x = Input.GetAxis("Horizontal") * speed;
             movingDirection.z = (zposition - transform.position.z) * speed;
 
@@ -55,6 +55,8 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             }
 
         }
+        if (transform.position.y < -deathFallDistance)
+            RagdollOn();
     }
 
     // Start is called before the first frame update
