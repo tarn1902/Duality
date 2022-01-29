@@ -17,6 +17,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
     private Dictionary<Transformation.Form, Transformation> transformations = new Dictionary<Transformation.Form, Transformation>();
     private Transformation currentTransformation;
 
+    [SerializeField] private SpriteRenderer defaultRenderer;
+
     public void Interact()
     {
         if (Input.GetMouseButtonDown(0))
@@ -30,6 +32,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 {
                     currentTransformation.DisableTransformation();
                     currentTransformation = null;
+                    defaultRenderer.enabled = true;
                     return;
                 }
 
@@ -48,6 +51,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 // Enable new transformation
                 currentTransformation = transformations[switcher.SwitchTo];
                 currentTransformation.EnableTransformation();
+
+                defaultRenderer.enabled = false;
 
                 return;
             }
@@ -86,6 +91,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
             }
 
             transformations[t.TransformationForm] = t;
+            t.gameObject.SetActive(false);
         }
     }
 
