@@ -80,6 +80,11 @@ public class MousePlayer : MonoBehaviour, IPlayer
         // Set up transformations dictionary
         foreach (Transformation t in inputTransformations)
         {
+            if (t == null)
+            {
+                continue;
+            }
+
             transformations[t.TransformationForm] = t;
         }
     }
