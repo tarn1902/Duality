@@ -18,7 +18,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
     private Transformation currentTransformation;
 
     [SerializeField] private SpriteRenderer defaultRenderer;
-
+    private Tween _untransformTween;
+    
     public bool IsMovementDisabled { get; set; }
 
     public void Interact()
@@ -35,6 +36,13 @@ public class MousePlayer : MonoBehaviour, IPlayer
                     currentTransformation.DisableTransformation();
                     currentTransformation = null;
                     defaultRenderer.enabled = true;
+
+                    // Animate
+                    Vector3 scale = defaultRenderer.transform.localScale;
+                    _untransformTween ??= defaultRenderer.transform.TweenScale(scale, scale * 1.25f, 0.3f, Ease.Spike, false);
+                    _untransformTween.Stop();
+                    _untransformTween.Start();
+
                     return;
                 }
 
