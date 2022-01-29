@@ -20,8 +20,17 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float leftReachRange = 1;
     [SerializeField] float headLookRange = 1;
 
+    enum Direction
+    {
+        left,
+        right,
+        none
+    }
+
+
     private bool isRagdoll = false;
     private Vector3 movingDirection = Vector3.zero;
+    private Direction direction = Direction.none;
     public void Interact()
     {
 
@@ -45,6 +54,17 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             movingDirection.z = (zposition - transform.position.z) * speed;
 
             cc.Move(movingDirection * Time.deltaTime);
+            if (movingDirection.x != 0)
+            {
+                transform.GetChild(0).transform.LookAt(transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, 0));
+                direction = Input.GetAxis("Horizontal") > 0 ? Direction.right : Direction.left;
+            }
+            else
+            {
+                transform.GetChild(0).transform.LookAt(transform.position + new Vector3(0, 0, -1));
+                direction = Direction.none;
+            }
+                
         }
         else
         {
@@ -108,9 +128,18 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     
     void MouseControllerReaction()
     {
-        rightReach.weight = rightReachRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
-        leftReach.weight = leftReachRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
-        headLook.weight = headLookRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
+        if ((transform.position.x < GameManager.Instance.MousePlayer.transform.position.x && direction == Direction.right) || (transform.position.x > GameManager.Instance.MousePlayer.transform.position.x && direction == Direction.left) || direction == Direction.none)
+        {
+            headLook.weight = headLookRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
+            rightReach.weight = rightReachRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
+            leftReach.weight = leftReachRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
+        }
+        else
+        {
+            headLook.weight = 0;
+            rightReach.weight = 0;
+            leftReach.weight = 0;
+        }
     }
 }
  
