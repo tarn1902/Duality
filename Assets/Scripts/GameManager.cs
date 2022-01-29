@@ -4,7 +4,7 @@ public sealed class GameManager : MonoBehaviour
 {
     #region Static properties
 
-    public GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; }
 
     #endregion
 
