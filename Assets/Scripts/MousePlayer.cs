@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,9 +13,45 @@ public class MousePlayer : MonoBehaviour, IPlayer
     [SerializeField] float speed = 5;
     [SerializeField] float zposition;
 
+    [SerializeField] private Transformation[] inputTransformations;
+    private Dictionary<Transformation.Form, Transformation> transformations = new Dictionary<Transformation.Form, Transformation>();
+    private Transformation currentTransformation;
+
     public void Interact()
     {
+        if (Input.GetMouseButtonDown(0))
+        {
+            // Check for form-switcher
+            FormSwitcher switcher;
+            if ((switcher = Physics.OverlapSphere(transform.position, 2f).Where(x => x.GetComponent<FormSwitcher>()).Select(x => x.GetComponent<FormSwitcher>()).FirstOrDefault()) != null)
+            {
+                // Remove transformation if same
+                if (switcher.SwitchTo == currentTransformation.TransformationForm)
+                {
+                    currentTransformation.DisableTransformation();
+                    currentTransformation = null;
+                    return;
+                }
 
+                // Disable current transformation
+                if (currentTransformation != null)
+                {
+                    currentTransformation.DisableTransformation();
+                }
+
+                // Enable new transformation
+                currentTransformation = transformations[switcher.SwitchTo];
+                currentTransformation.EnableTransformation();
+
+                return;
+            }
+
+            // Try to perform ability
+            if (currentTransformation != null && !currentTransformation.LockAbilityChange)
+            {
+                currentTransformation.ToggleAbility();
+            }
+        }
     }
 
     public void Movement()
