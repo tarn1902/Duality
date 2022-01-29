@@ -20,6 +20,7 @@ public sealed class Pendulum : MonoBehaviour
 
     private void Update()
     {
+        // Swing back and forth
         Vector3 euler = Hand.localEulerAngles;
         euler.z = MathsHelper.Pulse(Time.time, Frequency, 0f, Deviance * 2f) - Deviance;
         Hand.localEulerAngles = euler;
