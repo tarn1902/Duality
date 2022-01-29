@@ -20,6 +20,9 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float leftReachRange = 1;
     [SerializeField] float headLookRange = 1;
 
+    [SerializeField] ParticleSystem dropCloud = null;
+
+
     enum Direction
     {
         left,
@@ -31,6 +34,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     private bool isRagdoll = false;
     private Vector3 movingDirection = Vector3.zero;
     private Direction direction = Direction.none;
+    private bool isLanded = true;
     public void Interact()
     {
 
@@ -42,12 +46,18 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         {
             if (cc.isGrounded)
             {
+                if (!isLanded)
+                {
+                    dropCloud.Play();
+                    isLanded = true;
+                }
                 if (Input.GetButtonDown("Jump"))
                     movingDirection.y = jumpSpeed;
             }
             else
             {
                 movingDirection.y -= gravity * Time.deltaTime;
+                isLanded = false;
             }
             
             movingDirection.x = Input.GetAxis("Horizontal") * speed;
