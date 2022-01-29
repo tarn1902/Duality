@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: mat_Lava
+  m_Shader: {fileID: -6465566751694194690, guid: 08a677c6969a3b845b6e169acc2a0bf0, type: 3}
+  m_ShaderKeywords: 
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _SampleTexture2D_2fa732529d5341c282bfa69f25a59c1f_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 6044508bcda324142a29c4614a6a4b50, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_345004eb8b3b45f4bf0bd760547db386_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 021c7981febde7845af8c69d0288c22a, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_77d8fc23b4634c8eac4fbe91ec6531d7_Texture_1:
+        m_Texture: {fileID: 2800000, guid: b69167f9474031544a77e3908a2360e0, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_871574451d5649f4a2dfeebe8e99f1e0_Texture_1:
+        m_Texture: {fileID: 2800000, guid: 0a088cf45d40bfc46a6bd7f2896864eb, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - Vector1_772b82385a194477bdf6b68689043f53: 0.005
+    - Vector1_851955e3af604e63a9ad4430b68e7f11: 14.31
+    - Vector1_935e1d355aca4a028887ec3dee418763: 0.31
+    m_Colors: []
+  m_BuildTextureStacks: []
