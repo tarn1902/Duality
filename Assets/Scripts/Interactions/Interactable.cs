@@ -52,13 +52,13 @@ public abstract class Interactable : MonoBehaviour
         
     }
 
-    protected abstract void OnStartMouseInteraction();
+    protected abstract void OnStartMouseInteraction(MousePlayer mousePlayer, bool firstInteraction);
 
-    protected abstract void OnEndMouseInteraction();
+    protected abstract void OnEndMouseInteraction(MousePlayer mousePlayer, bool firstInteraction);
 
-    protected abstract void OnStartKeyboardInteraction();
+    protected abstract void OnStartKeyboardInteraction(KeyboardPlayer keyboardPlayer, bool firstInteraction);
 
-    protected abstract void OnEndKeyboardInteraction();
+    protected abstract void OnEndKeyboardInteraction(KeyboardPlayer keyboardPlayer, bool firstInteraction);
 
     #endregion
 
