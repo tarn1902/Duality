@@ -11,7 +11,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
 {
     Rigidbody rb = null;
     [SerializeField] float speed = 5;
-    [SerializeField] float zposition;
+    [SerializeField] float zposition = 0;
 
     [SerializeField] private Transformation[] inputTransformations;
     private Dictionary<Transformation.Form, Transformation> transformations = new Dictionary<Transformation.Form, Transformation>();
@@ -92,7 +92,11 @@ public class MousePlayer : MonoBehaviour, IPlayer
     // Update is called once per frame
     void Update()
     {
-        Movement();
         Interact();
+    }
+
+    void FixedUpdate()
+    {
+        Movement();
     }
 }
