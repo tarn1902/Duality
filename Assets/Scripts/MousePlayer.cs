@@ -19,6 +19,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     [SerializeField] private SpriteRenderer defaultRenderer;
     private Tween _untransformTween;
+    private Tween _flipTween;
     
     public bool IsMovementDisabled { get; set; }
 
@@ -63,6 +64,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 currentTransformation.EnableTransformation();
 
                 defaultRenderer.enabled = false;
+                _flipTween?.Stop();
 
                 return;
             }
@@ -90,6 +92,12 @@ public class MousePlayer : MonoBehaviour, IPlayer
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
         worldPos.z = zposition;
         rb.MovePosition(transform.position + (worldPos - transform.position) * Time.deltaTime * speed);
+
+        // Rotate animation
+        UpdateRotateAnimation();
+
+        // Flip sprite
+        UpdateSpriteScale();
     }
 
     // Start is called before the first frame update
@@ -119,5 +127,51 @@ public class MousePlayer : MonoBehaviour, IPlayer
     void FixedUpdate()
     {
         Movement();
+    }
+
+    private void UpdateRotateAnimation()
+    {
+        Transform t = currentTransformation == null ? defaultRenderer.transform : currentTransformation.transform;
+        Vector3 euler = t.localEulerAngles;
+        euler.z = MathsHelper.Map01(Mathf.Abs(rb.velocity.x), 0f, speed * 2f) * 20f * -Mathf.Sign(rb.velocity.x);
+        t.localEulerAngles = euler;
+    }
+
+    private void UpdateSpriteScale()
+    {
+        Transform t = currentTransformation == null ? defaultRenderer.transform : currentTransformation.transform;
+        if (t == defaultRenderer.transform)
+        {
+            if (rb.velocity.x > 0.01f && (_flipTween == null || (float)_flipTween.EndValue != -0.15f))
+            {
+                // -1
+                if (_untransformTween == null || !_untransformTween.IsActive)
+                {
+                    _flipTween?.Stop();
+                    _flipTween = t.TweenScaleX(t.localScale.x, -0.15f, 0.2f, Ease.Linear);
+                }
+                else
+                {
+                    Vector3 scale = t.localScale;
+                    scale.x = -0.15f;
+                    t.localScale = scale;
+                }
+            }
+            else if (rb.velocity.x < -0.01f && (_flipTween == null || (float)_flipTween.EndValue != 0.15f))
+            {
+                // 1
+                if (_untransformTween == null || !_untransformTween.IsActive)
+                {
+                    _flipTween?.Stop();
+                    _flipTween = t.TweenScaleX(t.localScale.x, 0.15f, 0.2f, Ease.Linear);
+                }
+                else
+                {
+                    Vector3 scale = t.localScale;
+                    scale.x = 0.15f;
+                    t.localScale = scale;
+                }
+            }
+        }
     }
 }
