@@ -21,6 +21,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float headLookRange = 1;
 
     [SerializeField] ParticleSystem dropCloud = null;
+    [SerializeField] Animator anim = null;
 
 
     enum Direction
@@ -61,6 +62,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             }
             
             movingDirection.x = Input.GetAxis("Horizontal") * speed;
+            anim.SetFloat("MovementDirection", (Input.GetAxis("Horizontal") + 1) / 2);
             movingDirection.z = (zposition - transform.position.z) * speed;
 
             cc.Move(movingDirection * Time.deltaTime);

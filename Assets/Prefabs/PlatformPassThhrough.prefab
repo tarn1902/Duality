@@ -184,4 +184,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e299ae313c3958e4b8b3d1c53e7156d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  collider: {fileID: 7600502921264667446}
+  toggleCollider: {fileID: 7600502921264667446}
