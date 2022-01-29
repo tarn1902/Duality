@@ -1,7 +1,14 @@
 using UnityEngine;
+using DavidFDev.Tweening;
 
 public abstract class Transformation : MonoBehaviour
 {
+    #region Fields
+
+    private Tween _enabledTween;
+
+    #endregion
+
     #region Properties
 
     public abstract Form TransformationForm { get; }
@@ -22,6 +29,10 @@ public abstract class Transformation : MonoBehaviour
     {
         IsTransformationEnabled = true;
         gameObject.SetActive(true);
+
+        _enabledTween ??= transform.TweenScale(transform.localScale, transform.localScale * 1.25f, 0.3f, Ease.Spike, false);
+        _enabledTween.Stop();
+        _enabledTween.Start();
 
         Debug.Log($"Enabled {TransformationForm}.");
 
