@@ -11,30 +11,10 @@ public class MousePlayer : MonoBehaviour, IPlayer
     Rigidbody rb = null;
     [SerializeField] float speed = 5;
     [SerializeField] float zposition;
-    [SerializeField] float interactRange = 5f;
-    [SerializeField] float reboundForce = 10f;
-    Interactable currentInteractable;
 
     public void Interact()
     {
-        if (Input.GetButtonDown("MouseDrag"))
-        {
-            var i = Interactable.At(transform.position, interactRange, Interactable.InteractableState.Mouse);
-            if (i != null)
-            {
-                i.StartMouseInteraction();
-                currentInteractable = i;
-            }
-        }
 
-        if (Input.GetButtonUp("MouseDrag"))
-        {
-            if (currentInteractable != null)
-            {
-                currentInteractable.EndMouseInteraction();
-                currentInteractable = null;
-            }
-        }
     }
 
     public void Movement()
