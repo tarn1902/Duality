@@ -47,7 +47,7 @@ public sealed class WeightedObject : MonoBehaviour
         }
 
         rb.MovePosition(transform.position + new Vector3(0f, delta, 0f));
-        Linked.rb.MovePosition(transform.position - new Vector3(0f, delta, 0f));
+        Linked.rb.MovePosition(Linked.transform.position - new Vector3(0f, delta, 0f));
     }
 
     private void Awake()
