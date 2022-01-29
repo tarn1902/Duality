@@ -2,6 +2,14 @@ using UnityEngine;
 
 public sealed class Platform : Transformation
 {
+    #region Fields
+
+    private float _accel;
+
+    private float _maxAccel = 12f;
+
+    #endregion
+
     #region Properties
 
     public override Form TransformationForm => Form.Platform;
@@ -36,12 +44,14 @@ public sealed class Platform : Transformation
             MousePlayer.GetComponent<Collider>().isTrigger = false;
 
             // Move down
-            MousePlayer.GetComponent<Rigidbody>().MovePosition(MousePlayer.transform.position + Vector3.down * 2f * Time.deltaTime);
+            _accel = Mathf.Min(_accel + 2.65f * Time.deltaTime, _maxAccel);
+            MousePlayer.GetComponent<Rigidbody>().MovePosition(MousePlayer.transform.position + Vector3.down * 2f * _accel * Time.deltaTime);
         }
         else
         {
             MousePlayer.IsMovementDisabled = false;
             MousePlayer.GetComponent<Collider>().isTrigger = true;
+            _accel = 0f;
         }
     }
 
