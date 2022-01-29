@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 60056116}
   - component: {fileID: 60056120}
   - component: {fileID: 60056115}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weight A
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -349,6 +349,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: MousePlayer
       objectReference: {fileID: 0}
+    - target: {fileID: 1220749842777724765, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1220749842777724770, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
       propertyPath: inputTransformations.Array.size
       value: 1
@@ -521,7 +525,7 @@ GameObject:
   - component: {fileID: 1993139446}
   - component: {fileID: 1993139445}
   - component: {fileID: 1993139444}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Weight B
   m_TagString: Untagged
   m_Icon: {fileID: 0}
