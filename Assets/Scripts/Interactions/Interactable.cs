@@ -50,6 +50,11 @@ public abstract class Interactable : MonoBehaviour
     }
 
     /// <summary>
+    ///     Allowed interactions.
+    /// </summary>
+    public virtual InteractableState AllowedInteractions { get; private set; } = InteractableState.Both;
+
+    /// <summary>
     ///     Whether mouse interactions are allowed.
     /// </summary>
     public bool IsMouseAllowed => (AllowedInteractions & InteractableState.Mouse) != 0;
@@ -58,12 +63,6 @@ public abstract class Interactable : MonoBehaviour
     ///     Whether keyboard interactions are allowed.
     /// </summary>
     public bool IsKeyboardAllowed => (AllowedInteractions & InteractableState.Keyboard) != 0;
-
-    /// <summary>
-    ///     Allowed interactions.
-    /// </summary>
-    [field: SerializeField]
-    public InteractableState AllowedInteractions { get; private set; } = InteractableState.Both;
 
     #endregion
 
