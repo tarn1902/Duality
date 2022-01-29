@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Collider))]
 public sealed class FormSwitcher : MonoBehaviour
 {
     #region Properties

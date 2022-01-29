@@ -85,11 +85,10 @@ public abstract class Transformation : MonoBehaviour
 
     public enum Form
     {
-        Normal = 0,
-        Platform = 1,
-        Weight = 2,
-        Pole = 3,
-        Ladder = 4
+        Platform = 0,
+        Weight = 1,
+        Pole = 2,
+        Ladder = 3
     }
 
     #endregion
