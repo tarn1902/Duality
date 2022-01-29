@@ -2,12 +2,6 @@ using UnityEngine;
 
 public sealed class Platform : Transformation
 {
-    #region Fields
-
-    private Vector3 _oldPos;
-
-    #endregion
-
     #region Properties
 
     public override Form TransformationForm => Form.Platform;
@@ -26,6 +20,7 @@ public sealed class Platform : Transformation
 
     protected override void OnAbilityEnabled()
     {
+        ToggleAbility();
     }
 
     protected override void OnAbilityDisabled()
@@ -34,20 +29,20 @@ public sealed class Platform : Transformation
 
     protected override void OnUpdate()
     {
-        if (Vector3.Distance(MousePlayer.transform.position, GameManager.Instance.KeyboardPlayer.transform.position) < 3f &&
+        if (Vector3.Distance(MousePlayer.transform.position, GameManager.Instance.KeyboardPlayer.transform.position) < 1f &&
             GameManager.Instance.KeyboardPlayer.transform.position.y > MousePlayer.transform.position.y)
         {
-            MousePlayer.transform.position = _oldPos;
             MousePlayer.IsMovementDisabled = true;
             MousePlayer.GetComponent<Collider>().isTrigger = false;
+
+            // Move down
+            MousePlayer.GetComponent<Rigidbody>().MovePosition(MousePlayer.transform.position + Vector3.down * 2f * Time.deltaTime);
         }
         else
         {
             MousePlayer.IsMovementDisabled = false;
             MousePlayer.GetComponent<Collider>().isTrigger = true;
         }
-
-        _oldPos = MousePlayer.transform.position;
     }
 
     #endregion
