@@ -1,0 +1,17 @@
+{
+	"name": "com.davidfdev.tweening",
+	"version": "1.0.0",
+	"displayName": "Tweening Animations by DavidFDev",
+	"description": "An easy solution for complex tweening animations",
+	"unity": "2019.1",
+	"hideInEditor": true,
+	"documentationUrl": "https://github.com/DavidF-Dev/Unity-TweenAnimation/blob/main/DOCUMENTATION.md",
+	"changelogUrl": "https://github.com/DavidF-Dev/Unity-TweenAnimation/blob/main/CHANGELOG.md",
+	"licensesUrl": "https://github.com/DavidF-Dev/Unity-TweenAnimation/blob/main/LICENSE.md",
+	"author":
+	{
+		"name": "DavidFDev",
+		"email": "contact@davidfdev.com",
+		"url": "https://www.davidfdev.com"
+	}
+}
