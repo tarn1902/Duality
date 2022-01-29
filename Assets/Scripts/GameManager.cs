@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public sealed class GameManager : MonoBehaviour
@@ -10,10 +11,8 @@ public sealed class GameManager : MonoBehaviour
 
     #region Properties
 
-    [field: SerializeField]
     public MousePlayer MousePlayer { get; private set; }
 
-    [field: SerializeField]
     public KeyboardPlayer KeyboardPlayer { get; private set; }
 
     public Checkpoint CurrentCheckpoint { get; private set; }
@@ -52,6 +51,11 @@ public sealed class GameManager : MonoBehaviour
         }
 
         Instance = this;
+
+        // Find player objects in scene
+        GameObject o;
+        MousePlayer = (o = GameObject.FindWithTag("MousePlayer")) != null ? o.GetComponent<MousePlayer>() : throw new NullReferenceException(nameof(MousePlayer));
+        KeyboardPlayer = (o = GameObject.FindWithTag("KeyboardPlayer")) != null ? o.GetComponent<KeyboardPlayer>() : throw new NullReferenceException(nameof(KeyboardPlayer));
     }
 
     private void OnDestroy()
