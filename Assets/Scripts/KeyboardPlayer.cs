@@ -10,30 +10,11 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float speed = 1;
     [SerializeField] float jumpSpeed = 1;
     [SerializeField] float gravity = 10.0f;
-    [SerializeField] float interactRange = 5f;
     [SerializeField] float zposition;
     private Vector3 movingDirection = Vector3.zero;
-    Interactable currentInteractable;
     public void Interact()
     {
-        if (Input.GetButtonDown("KeyboardDrag"))
-        {
-            var i = Interactable.At(transform.position, interactRange, Interactable.InteractableState.Keyboard);
-            if (i != null)
-            {
-                i.StartKeyboardInteraction();
-                currentInteractable = i;
-            }
-        }
 
-        if (Input.GetButtonUp("KeyboardDrag"))
-        {
-            if (currentInteractable != null)
-            {
-                currentInteractable.EndKeyboardInteraction();
-                currentInteractable = null;
-            }
-        }
     }
 
     public void Movement()

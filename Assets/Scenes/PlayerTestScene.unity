@@ -641,10 +641,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MousePlayer
       objectReference: {fileID: 0}
-    - target: {fileID: 1220749842777724770, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
-      propertyPath: speed
-      value: 10
-      objectReference: {fileID: 0}
     - target: {fileID: 1220749842777724771, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
       propertyPath: m_IsKinematic
       value: 0
@@ -652,18 +648,6 @@ PrefabInstance:
     - target: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
       propertyPath: m_RootOrder
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
       propertyPath: m_LocalRotation.w
