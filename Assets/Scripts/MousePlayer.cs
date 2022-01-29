@@ -25,7 +25,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
         {
             // Check for form-switcher
             FormSwitcher switcher;
-            if ((switcher = Physics.OverlapSphere(transform.position, 2f).Where(x => x.GetComponent<FormSwitcher>()).Select(x => x.GetComponent<FormSwitcher>()).FirstOrDefault()) != null)
+            if ((switcher = Physics.OverlapSphere(transform.position, 0.6f).Where(x => x.GetComponent<FormSwitcher>()).Select(x => x.GetComponent<FormSwitcher>()).FirstOrDefault()) != null)
             {
                 // Remove transformation if same
                 if (currentTransformation != null && switcher.SwitchTo == currentTransformation.TransformationForm)
