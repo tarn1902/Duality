@@ -26,7 +26,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
             if ((switcher = Physics.OverlapSphere(transform.position, 2f).Where(x => x.GetComponent<FormSwitcher>()).Select(x => x.GetComponent<FormSwitcher>()).FirstOrDefault()) != null)
             {
                 // Remove transformation if same
-                if (switcher.SwitchTo == currentTransformation.TransformationForm)
+                if (currentTransformation != null && switcher.SwitchTo == currentTransformation.TransformationForm)
                 {
                     currentTransformation.DisableTransformation();
                     currentTransformation = null;
@@ -37,6 +37,12 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 if (currentTransformation != null)
                 {
                     currentTransformation.DisableTransformation();
+                }
+
+                if (!transformations.ContainsKey(switcher.SwitchTo))
+                {
+                    Debug.LogError($"{switcher.SwitchTo} not set up in {nameof(MousePlayer)} component.");
+                    return;
                 }
 
                 // Enable new transformation
@@ -50,7 +56,10 @@ public class MousePlayer : MonoBehaviour, IPlayer
             if (currentTransformation != null && !currentTransformation.LockAbilityChange)
             {
                 currentTransformation.ToggleAbility();
+                return;
             }
+
+            Debug.Log("Nothing can be done...");
         }
     }
 
@@ -67,6 +76,12 @@ public class MousePlayer : MonoBehaviour, IPlayer
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+
+        // Set up transformations dictionary
+        foreach (Transformation t in inputTransformations)
+        {
+            transformations[t.TransformationForm] = t;
+        }
     }
 
     // Update is called once per frame
