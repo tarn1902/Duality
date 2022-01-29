@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bd717c2e22920b41baf4cb091d48085, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <MousePlayer>k__BackingField: {fileID: 0}
+  <KeyboardPlayer>k__BackingField: {fileID: 0}
 --- !u!4 &509308615
 Transform:
   m_ObjectHideFlags: 0
