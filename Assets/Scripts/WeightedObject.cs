@@ -19,6 +19,9 @@ public sealed class WeightedObject : MonoBehaviour
     public WeightedObject Linked { get; private set; }
 
     [field: SerializeField]
+    public float Distance { get; private set; } = 2.5f;
+
+    [field: SerializeField]
     public float ComeToRestSpeed { get; private set; } = 4f;
 
     public bool BeingControlled { get; private set; }
@@ -39,15 +42,16 @@ public sealed class WeightedObject : MonoBehaviour
         Linked.BeingControlled = false;
     }
 
-    public void ControlledMove(float delta)
+    public bool ControlledMove(float delta)
     {
-        if (!BeingControlled)
+        if (!BeingControlled || Vector2.Distance(new Vector2(0f, initY), new Vector2(0f, transform.position.y)) > Distance)
         {
-            return;
+            return false;
         }
 
         rb.MovePosition(transform.position + new Vector3(0f, delta, 0f));
         Linked.rb.MovePosition(Linked.transform.position - new Vector3(0f, delta, 0f));
+        return true;
     }
 
     private void Awake()

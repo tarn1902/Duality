@@ -47,6 +47,7 @@ public sealed class Weight : Transformation
         pos.z = MousePlayer.transform.position.z;
         MousePlayer.transform.position = pos;
         _lockX = MousePlayer.transform.position.x;
+        MousePlayer.IsMovementDisabled = true;
     }
 
     protected override void OnAbilityDisabled()
@@ -56,6 +57,7 @@ public sealed class Weight : Transformation
             // Stop controlling the weight
             _weighingDownObj.EndControl();
             _weighingDownObj = null;
+            MousePlayer.IsMovementDisabled = false;
         }
     }
 
@@ -63,7 +65,7 @@ public sealed class Weight : Transformation
     {
         if (IsAbilityEnabled)
         {
-            _weighingDownObj.ControlledMove(MousePlayer.GetComponent<Rigidbody>().velocity.y * 2.5f * Time.deltaTime);
+            _weighingDownObj.ControlledMove(-2.5f * Time.deltaTime);
 
             Vector3 pos = MousePlayer.transform.position;
             pos.x = _lockX;

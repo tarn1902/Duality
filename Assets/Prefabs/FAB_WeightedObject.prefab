@@ -126,4 +126,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <Linked>k__BackingField: {fileID: 0}
+  <Distance>k__BackingField: 1
   <ComeToRestSpeed>k__BackingField: 4
