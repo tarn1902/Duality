@@ -19,6 +19,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     [SerializeField] private SpriteRenderer defaultRenderer;
 
+    public bool IsMovementDisabled { get; set; }
+
     public void Interact()
     {
         if (Input.GetMouseButtonDown(0))
@@ -70,6 +72,11 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     public void Movement()
     {
+        if (IsMovementDisabled)
+        {
+            return;
+        }
+
         Vector3 mousePosition = Input.mousePosition;
         mousePosition.z = transform.position.z - Camera.main.transform.position.z;
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);

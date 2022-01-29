@@ -17,13 +17,11 @@ public sealed class Platform : Transformation
     #region Methods
 
     protected override void OnTransformationEnabled()
-    {
-        
+    {   
     }
 
     protected override void OnTransformationDisabled()
     {
-        
     }
 
     protected override void OnAbilityEnabled()
@@ -40,6 +38,13 @@ public sealed class Platform : Transformation
             GameManager.Instance.KeyboardPlayer.transform.position.y > MousePlayer.transform.position.y)
         {
             MousePlayer.transform.position = _oldPos;
+            MousePlayer.IsMovementDisabled = true;
+            MousePlayer.GetComponent<Collider>().isTrigger = false;
+        }
+        else
+        {
+            MousePlayer.IsMovementDisabled = false;
+            MousePlayer.GetComponent<Collider>().isTrigger = true;
         }
 
         _oldPos = MousePlayer.transform.position;
