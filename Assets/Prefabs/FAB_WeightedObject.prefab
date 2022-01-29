@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 2326178566480045161}
   - component: {fileID: 2326178566480045157}
   - component: {fileID: 2326178566480045166}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: FAB_WeightedObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
