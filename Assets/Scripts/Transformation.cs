@@ -23,6 +23,8 @@ public abstract class Transformation : MonoBehaviour
         IsTransformationEnabled = true;
         gameObject.SetActive(true);
 
+        Debug.Log($"Enabled {TransformationForm}.");
+
         OnTransformationEnabled();
     }
 
@@ -35,6 +37,9 @@ public abstract class Transformation : MonoBehaviour
 
         IsTransformationEnabled = false;
         gameObject.SetActive(false);
+
+        Debug.Log($"Disabled {TransformationForm}.");
+
         OnTransformationDisabled();
     }
 
@@ -46,6 +51,8 @@ public abstract class Transformation : MonoBehaviour
         }
 
         IsAbilityEnabled = !IsAbilityEnabled;
+
+        Debug.Log($"Toggled ability: {IsAbilityEnabled}");
 
         if (IsAbilityEnabled)
         {
