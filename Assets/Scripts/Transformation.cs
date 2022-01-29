@@ -4,9 +4,15 @@ public abstract class Transformation : MonoBehaviour
 {
     #region Properties
 
+    public abstract Form TransformationForm { get; }
+
     public bool IsTransformationEnabled { get; private set; }
 
     public bool IsAbilityEnabled { get; private set; }
+
+    public bool LockAbilityChange { get; protected set; }
+
+    public MousePlayer MousePlayer => GameManager.Instance.MousePlayer;
 
     #endregion
 
@@ -71,6 +77,19 @@ public abstract class Transformation : MonoBehaviour
         }
 
         OnUpdate();
+    }
+
+    #endregion
+
+    #region Nested types
+
+    public enum Form
+    {
+        Normal = 0,
+        Platform = 1,
+        Weight = 2,
+        Pole = 3,
+        Ladder = 4
     }
 
     #endregion
