@@ -44,7 +44,7 @@ public sealed class WeightedObject : MonoBehaviour
 
     public bool ControlledMove(float delta)
     {
-        if (!BeingControlled || Vector2.Distance(new Vector2(0f, initY), new Vector2(0f, transform.position.y)) > Distance)
+        if (!BeingControlled || initY - transform.position.y > Distance)
         {
             return false;
         }

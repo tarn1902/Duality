@@ -7,13 +7,14 @@ public sealed class Weight : Transformation
 
     private WeightedObject _weighingDownObj;
 
-    private float _lockX;
-
     #endregion
 
     #region Properties
 
     public override Form TransformationForm => Form.Weight;
+
+    [field: SerializeField]
+    public float WeightMoveSpeed { get; private set; } = 10f;
 
     #endregion
 
@@ -46,7 +47,6 @@ public sealed class Weight : Transformation
         Vector3 pos = _weighingDownObj.transform.position;
         pos.z = MousePlayer.transform.position.z;
         MousePlayer.transform.position = pos;
-        _lockX = MousePlayer.transform.position.x;
         MousePlayer.IsMovementDisabled = true;
     }
 
@@ -65,10 +65,9 @@ public sealed class Weight : Transformation
     {
         if (IsAbilityEnabled)
         {
-            _weighingDownObj.ControlledMove(-2.5f * Time.deltaTime);
+            _weighingDownObj.ControlledMove(-WeightMoveSpeed * Time.deltaTime);
 
             Vector3 pos = MousePlayer.transform.position;
-            pos.x = _lockX;
             pos.y = _weighingDownObj.transform.position.y;
             MousePlayer.transform.position = pos;
         }

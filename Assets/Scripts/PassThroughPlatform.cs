@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PassThroughPlatform : MonoBehaviour
 {
-    [SerializeField] Collider collider;
+    [SerializeField] Collider toggleCollider = null;
     // Start is called before the first frame update
     void Start()
     {
-        collider.isTrigger = false;
+        toggleCollider.isTrigger = false;
     }
 
     // Update is called once per frame
@@ -19,12 +19,12 @@ public class PassThroughPlatform : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other != collider)
-            collider.enabled = false;
+        if (other != toggleCollider)
+            toggleCollider.enabled = false;
     }
 
     private void OnTriggerExit(Collider other)
     {
-        collider.enabled = true;
+        toggleCollider.enabled = true;
     }
 }
