@@ -129,6 +129,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 144b9f2f4bca52c43977e34d8ebb3c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <Accel>k__BackingField: 30
+  <MaxAccel>k__BackingField: 200
 --- !u!212 &6251630765422196175
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -672,6 +674,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3c386093fb2ada4c8ef4140ae20a45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <WeightMoveSpeed>k__BackingField: 10
 --- !u!212 &3945115079862648177
 SpriteRenderer:
   m_ObjectHideFlags: 0
