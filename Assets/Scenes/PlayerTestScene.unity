@@ -328,11 +328,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
   m_PrefabInstance: {fileID: 1220749844054827778}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &642760854 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4694440234413688766, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
-  m_PrefabInstance: {fileID: 5212012171673594427}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &696049440 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5212012172476948913, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
@@ -805,7 +800,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 642760854}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 1881000846}
   m_Lens:
     FieldOfView: 60
@@ -868,6 +863,10 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1220749842777724770, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
+      propertyPath: zposition
+      value: -1
+      objectReference: {fileID: 0}
     - target: {fileID: 1220749842777724775, guid: 198cd850a3c668d4aba6368c5d1fa6af, type: 3}
       propertyPath: m_RootOrder
       value: 3
@@ -925,6 +924,10 @@ PrefabInstance:
       propertyPath: m_Data.m_Target
       value: 
       objectReference: {fileID: 575731499}
+    - target: {fileID: 1357334545, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
+      propertyPath: m_SettingsGUIToggle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1365495287, guid: e12bd084c495b4146b4096a16bae5509, type: 3}
       propertyPath: m_Layer
       value: 8
