@@ -34,31 +34,55 @@ public abstract class Interactable : MonoBehaviour
 
     public void StartMouseInteraction()
     {
+        if (IsMouseInteracting)
+        {
+            return;
+        }
 
+        Debug.Log($"{nameof(StartMouseInteraction)} on {gameObject.name} ({State}).");
+        OnStartMouseInteraction(GameManager.Instance.MousePlayer, !IsKeyboardInteracting);
     }
 
     public void EndMouseInteraction()
     {
-        
+        if (!IsMouseInteracting)
+        {
+            return;
+        }
+
+        Debug.Log($"{nameof(EndMouseInteraction)} on {gameObject.name} ({State}).");
+        OnEndMouseInteraction(GameManager.Instance.MousePlayer, !IsKeyboardInteracting);
     }
 
     public void StartKeyboardInteraction()
     {
+        if (!IsKeyboardInteracting)
+        {
+            return;
+        }
 
+        Debug.Log($"{nameof(StartKeyboardInteraction)} on {gameObject.name} ({State}).");
+        OnStartKeyboardInteraction(GameManager.Instance.KeyboardPlayer, !IsMouseInteracting);
     }
 
     public void EndKeyboardInteraction()
     {
-        
+        if (IsKeyboardInteracting)
+        {
+            return;
+        }
+
+        Debug.Log($"{nameof(OnEndKeyboardInteraction)} on {gameObject.name} ({State}).");
+        OnEndKeyboardInteraction(GameManager.Instance.KeyboardPlayer, !IsMouseInteracting);
     }
 
-    protected abstract void OnStartMouseInteraction(MousePlayer mousePlayer, bool firstInteraction);
+    protected abstract void OnStartMouseInteraction(MousePlayer mousePlayer, bool onlyMouse);
 
-    protected abstract void OnEndMouseInteraction(MousePlayer mousePlayer, bool firstInteraction);
+    protected abstract void OnEndMouseInteraction(MousePlayer mousePlayer, bool onlyMouse);
 
-    protected abstract void OnStartKeyboardInteraction(KeyboardPlayer keyboardPlayer, bool firstInteraction);
+    protected abstract void OnStartKeyboardInteraction(KeyboardPlayer keyboardPlayer, bool onlyKeyboard);
 
-    protected abstract void OnEndKeyboardInteraction(KeyboardPlayer keyboardPlayer, bool firstInteraction);
+    protected abstract void OnEndKeyboardInteraction(KeyboardPlayer keyboardPlayer, bool onlyKeyboard);
 
     #endregion
 
