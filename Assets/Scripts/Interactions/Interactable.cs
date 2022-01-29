@@ -39,6 +39,7 @@ public abstract class Interactable : MonoBehaviour
             return;
         }
 
+        IsMouseInteracting = true;
         Debug.Log($"{nameof(StartMouseInteraction)} on {gameObject.name} ({State}).");
         OnStartMouseInteraction(GameManager.Instance.MousePlayer, !IsKeyboardInteracting);
     }
@@ -50,28 +51,31 @@ public abstract class Interactable : MonoBehaviour
             return;
         }
 
+        IsMouseInteracting = false;
         Debug.Log($"{nameof(EndMouseInteraction)} on {gameObject.name} ({State}).");
         OnEndMouseInteraction(GameManager.Instance.MousePlayer, !IsKeyboardInteracting);
     }
 
     public void StartKeyboardInteraction()
     {
-        if (!IsKeyboardInteracting)
+        if (IsKeyboardInteracting)
         {
             return;
         }
 
+        IsKeyboardInteracting = true;
         Debug.Log($"{nameof(StartKeyboardInteraction)} on {gameObject.name} ({State}).");
         OnStartKeyboardInteraction(GameManager.Instance.KeyboardPlayer, !IsMouseInteracting);
     }
 
     public void EndKeyboardInteraction()
     {
-        if (IsKeyboardInteracting)
+        if (!IsKeyboardInteracting)
         {
             return;
         }
 
+        IsKeyboardInteracting = false;
         Debug.Log($"{nameof(OnEndKeyboardInteraction)} on {gameObject.name} ({State}).");
         OnEndKeyboardInteraction(GameManager.Instance.KeyboardPlayer, !IsMouseInteracting);
     }
