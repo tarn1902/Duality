@@ -69,52 +69,56 @@ public abstract class Interactable : MonoBehaviour
 
     #region Methods
 
-    public void StartMouseInteraction()
+    public bool StartMouseInteraction()
     {
         if (IsMouseInteracting || !IsMouseAllowed)
         {
-            return;
+            return false;
         }
 
         IsMouseInteracting = true;
         Debug.Log($"{nameof(StartMouseInteraction)} on {gameObject.name} ({State}).");
         OnStartMouseInteraction(GameManager.Instance.MousePlayer, !IsKeyboardInteracting);
+        return true;
     }
 
-    public void EndMouseInteraction()
+    public bool EndMouseInteraction()
     {
         if (!IsMouseInteracting)
         {
-            return;
+            return false;
         }
 
         IsMouseInteracting = false;
         Debug.Log($"{nameof(EndMouseInteraction)} on {gameObject.name} ({State}).");
         OnEndMouseInteraction(GameManager.Instance.MousePlayer, !IsKeyboardInteracting);
+        return true;
     }
 
-    public void StartKeyboardInteraction()
+    public bool StartKeyboardInteraction()
     {
         if (IsKeyboardInteracting || !IsKeyboardAllowed)
         {
-            return;
+            return false;
         }
 
         IsKeyboardInteracting = true;
         Debug.Log($"{nameof(StartKeyboardInteraction)} on {gameObject.name} ({State}).");
         OnStartKeyboardInteraction(GameManager.Instance.KeyboardPlayer, !IsMouseInteracting);
+        return true;
     }
 
-    public void EndKeyboardInteraction()
+    public bool EndKeyboardInteraction()
     {
         if (!IsKeyboardInteracting)
         {
-            return;
+            return false;
         }
 
         IsKeyboardInteracting = false;
         Debug.Log($"{nameof(OnEndKeyboardInteraction)} on {gameObject.name} ({State}).");
         OnEndKeyboardInteraction(GameManager.Instance.KeyboardPlayer, !IsMouseInteracting);
+        return true;
     }
 
     protected abstract void OnStartMouseInteraction(MousePlayer mousePlayer, bool onlyMouse);
