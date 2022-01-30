@@ -49,6 +49,9 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     private Vector3 movingDirection = Vector3.zero;
     private Direction direction = Direction.none;
     private bool isJustLanded = true;
+
+    private bool hasWon;
+
     public void Interact()
     {
 
@@ -61,6 +64,12 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             Climbing();
             Jump();
             Move();
+
+            if(hasWon)
+            {
+                movingDirection.x = 0f;
+            }
+
             cc.Move(movingDirection * Time.deltaTime);
 
             FaceDirection();
@@ -309,10 +318,12 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             isMovingUpLadder = false;
             anim.SetBool("IsClimbing", false);
         }
+
+        if (other.CompareTag("Finish") && !hasWon)
+        {
+            StartCoroutine(WinEvent());
+        }
     }
-
-    
-
 
     public void AttachPlayer(Rigidbody[] handPlacments)
     {
@@ -333,6 +344,25 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             }
         }
 
+    }
+
+    private IEnumerator WinEvent()
+    {
+        hasWon = true;
+
+        // Start dance
+        anim.SetTrigger("OnDance");
+
+        // Stop music
+        Audio.StopMusic();
+
+        // Play sfx
+        Audio.PlaySfx(GameManager.GetSfx("SFX_Victory"));
+
+        yield return new WaitForSeconds(2.5f);
+        
+        // Start victory music
+        Audio.PlayMusic(GameManager.GetClip("SND_VictorySong"));
     }
 }
  
