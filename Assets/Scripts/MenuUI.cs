@@ -92,6 +92,11 @@ public sealed class MenuUI : MonoBehaviour
         _loading = true;
     }
 
+    public void OnOpenUrl(string url)
+    {
+        Application.OpenURL(url);
+    }
+
     private void Start()
     {
         // INIT GAME
