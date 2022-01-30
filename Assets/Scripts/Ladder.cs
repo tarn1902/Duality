@@ -151,7 +151,7 @@ public sealed class Ladder : Transformation
 
     private bool IsSolid(Vector3 pos, Collider ignore, out Collider result)
     {
-        return (result = Physics.OverlapSphere(pos, 0.4f, SolidLayer.value).Where(x => x != ignore).FirstOrDefault()) != null;
+        return (result = Physics.OverlapBox(pos, new Vector3(0.7f, 0.7f, 2f), Quaternion.identity, SolidLayer.value).Where(x => x != ignore).FirstOrDefault()) != null;
     }
 
     private bool CanBeginLadder(out Vector3 pos)
