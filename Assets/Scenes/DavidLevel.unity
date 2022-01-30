@@ -923,6 +923,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CookieJar
       objectReference: {fileID: 0}
+    - target: {fileID: 4654048015732719844, guid: 4f616139c79be8a4eaca4d3e8bbe0be0, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5466614237460437598, guid: 4f616139c79be8a4eaca4d3e8bbe0be0, type: 3}
       propertyPath: m_RootOrder
       value: 17
