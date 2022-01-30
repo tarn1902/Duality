@@ -8,6 +8,7 @@ public class AttachCharacter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        GameManager.Instance.KeyboardPlayer.AttachPlayer(handPlacments);
+        if (GameManager.Instance.IsKeyboardPlayer(other.gameObject))
+            GameManager.Instance.KeyboardPlayer.AttachPlayer(handPlacments);
     }
 }
