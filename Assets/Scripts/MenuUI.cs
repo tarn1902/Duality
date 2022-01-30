@@ -122,6 +122,8 @@ public sealed class MenuUI : MonoBehaviour
 
     private IEnumerator LoadScene(int buildIndex)
     {
+        Audio.PlaySfx(GameManager.GetSfx("SFX_ButtonPress"));
+
         DarkImage.gameObject.SetActive(true);
         DarkImage.TweenAlpha(0f, 1f, FadeOutDuration, Ease.SineOut);
         yield return new WaitForSeconds(FadeOutDuration);
