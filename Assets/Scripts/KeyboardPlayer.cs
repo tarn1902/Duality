@@ -176,9 +176,9 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             }
             else if (justJumpedFromPendulum)
             {
-                movingDirection.y = ladderPopSpeed;
+                movingDirection.y = pendulumPopSpeed;
                 justJumpedFromPendulum = false;
-            }
+             }
             movingDirection.y -= gravity * Time.deltaTime;
             anim.SetBool("IsFalling", true);
             isJustLanded = false;
