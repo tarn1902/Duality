@@ -15,7 +15,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     [SerializeField] private Transformation[] inputTransformations;
     private Dictionary<Transformation.Form, Transformation> transformations = new Dictionary<Transformation.Form, Transformation>();
-    private Transformation currentTransformation;
+    public Transformation CurrentTransformation { get; private set; }
 
     [SerializeField] private SpriteRenderer defaultRenderer;
     private Tween _untransformTween;
@@ -32,10 +32,10 @@ public class MousePlayer : MonoBehaviour, IPlayer
             if ((switcher = Physics.OverlapSphere(transform.position, 0.6f).Where(x => x.GetComponent<FormSwitcher>()).Select(x => x.GetComponent<FormSwitcher>()).FirstOrDefault()) != null)
             {
                 // Remove transformation if same
-                if (currentTransformation != null && switcher.SwitchTo == currentTransformation.TransformationForm)
+                if (CurrentTransformation != null && switcher.SwitchTo == CurrentTransformation.TransformationForm)
                 {
-                    currentTransformation.DisableTransformation();
-                    currentTransformation = null;
+                    CurrentTransformation.DisableTransformation();
+                    CurrentTransformation = null;
                     defaultRenderer.enabled = true;
 
                     // Animate
@@ -50,9 +50,9 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 }
 
                 // Disable current transformation
-                if (currentTransformation != null)
+                if (CurrentTransformation != null)
                 {
-                    currentTransformation.DisableTransformation();
+                    CurrentTransformation.DisableTransformation();
                 }
 
                 if (!transformations.ContainsKey(switcher.SwitchTo))
@@ -62,8 +62,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 }
 
                 // Enable new transformation
-                currentTransformation = transformations[switcher.SwitchTo];
-                currentTransformation.EnableTransformation();
+                CurrentTransformation = transformations[switcher.SwitchTo];
+                CurrentTransformation.EnableTransformation();
 
                 Audio.PlaySfx(GameManager.GetSfx("SFX_Transform"));
 
@@ -74,9 +74,9 @@ public class MousePlayer : MonoBehaviour, IPlayer
             }
 
             // Try to perform ability
-            if (currentTransformation != null && !currentTransformation.LockAbilityChange)
+            if (CurrentTransformation != null && !CurrentTransformation.LockAbilityChange)
             {
-                currentTransformation.ToggleAbility();
+                CurrentTransformation.ToggleAbility();
                 return;
             }
 
@@ -135,7 +135,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     private void UpdateRotateAnimation()
     {
-        Transform t = currentTransformation == null ? defaultRenderer.transform : currentTransformation.transform;
+        Transform t = CurrentTransformation == null ? defaultRenderer.transform : CurrentTransformation.transform;
         Vector3 euler = t.localEulerAngles;
         euler.z = MathsHelper.Map01(Mathf.Abs(rb.velocity.x), 0f, speed * 2f) * 20f * -Mathf.Sign(rb.velocity.x);
         t.localEulerAngles = euler;
@@ -143,7 +143,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     private void UpdateSpriteScale()
     {
-        Transform t = currentTransformation == null ? defaultRenderer.transform : currentTransformation.transform;
+        Transform t = CurrentTransformation == null ? defaultRenderer.transform : CurrentTransformation.transform;
         if (t == defaultRenderer.transform)
         {
             if (rb.velocity.x > 0.01f && (_flipTween == null || (float)_flipTween.EndValue != -0.15f))
