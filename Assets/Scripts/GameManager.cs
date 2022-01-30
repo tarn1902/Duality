@@ -39,6 +39,7 @@ public sealed class GameManager : MonoBehaviour
     public void Respawn()
     {
         Vector3 pos = CurrentCheckpoint == null ? Vector3.zero : CurrentCheckpoint.RespawnTransform.position;
+        pos.y += 1f;
         KeyboardPlayer.transform.position = pos;
     }
 
