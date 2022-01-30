@@ -2,6 +2,7 @@ using DavidFDev.Audio;
 using DavidFDev.Maths;
 using DavidFDev.Tweening;
 using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
