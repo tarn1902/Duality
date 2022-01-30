@@ -247,6 +247,14 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     
     void MouseControllerReaction()
     {
+        if (Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position) > 5.5f)
+        {
+            headLook.weight = 0;
+            rightReach.weight = 0;
+            leftReach.weight = 0;
+            return;
+        }
+
         if ((transform.position.x < GameManager.Instance.MousePlayer.transform.position.x && direction == Direction.right) || (transform.position.x > GameManager.Instance.MousePlayer.transform.position.x && direction == Direction.left) || direction == Direction.none)
         {
             headLook.weight = headLookRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
