@@ -14,6 +14,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float zposition = 0;
     [SerializeField] float deathFallDistance = 0;
     [SerializeField] float ladderPopSpeed = 10;
+    [SerializeField] float pendulumPopSpeed = 10;
     [SerializeField] TwoBoneIKConstraint rightReach = null;
     [SerializeField] TwoBoneIKConstraint leftReach = null;
     [SerializeField] MultiAimConstraint headLook = null;
@@ -24,10 +25,14 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 
     [SerializeField] ParticleSystem dropCloud = null;
     [SerializeField] Animator anim = null;
-
+    [SerializeField] Transform ragdollRoot = null;
+    public GameObject[] grabHands = null;
+    private Rigidbody[] joints = null;
     private bool isTouchingLadder = false;
     private bool isMovingUpLadder = false;
     private bool isTopOfLadder = false;
+    bool justJumpedFromPendulum = false;
+    
 
 
     enum Direction
@@ -67,8 +72,19 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         {
             if (Input.GetButtonDown("Jump"))
             {
-                transform.position = Vector3.zero;
+                if (transform.position.y < -deathFallDistance)
+                {
+                    GameManager.Instance.Respawn();
+                    
+                }
+                else
+                {
+                    transform.position = ragdollRoot.position;
+                    justJumpedFromPendulum = true;
+
+                }
                 RagdollOff();
+
             }
         }
      
@@ -128,6 +144,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
                 anim.SetBool("IsFalling", false);
                 anim.SetBool("IsLanding", true);
                 isJustLanded = true;
+                justJumpedFromPendulum = false;
             }
             if (Input.GetButtonDown("Jump"))
             {
@@ -185,6 +202,10 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     {
         foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
         {
+            if (rb == GetComponent<Rigidbody>())
+            {
+                continue;
+            }
             rb.isKinematic = false;
             rb.useGravity = true;
         }
@@ -208,6 +229,15 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         {
             c.enabled = false;
         }
+        if (joints != null)
+        {
+            foreach (Rigidbody joint in joints)
+            {
+                Destroy(joint.GetComponent<FixedJoint>());
+            }
+            justJumpedFromPendulum = true;
+        }
+
         GetComponentInChildren<Animator>().enabled = true;
         isRagdoll = false;
         cc.enabled = true;
@@ -253,6 +283,30 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             isMovingUpLadder = false;
             anim.SetBool("IsClimbing", false);
         }
+    }
+
+    
+
+
+    public void AttachPlayer(Rigidbody[] handPlacments)
+    {
+        if (!justJumpedFromPendulum)
+        {
+            GameManager.Instance.KeyboardPlayer.RagdollOn();
+            joints = handPlacments;
+            for (int i = 0; i < 2; i++)
+            {
+                if (handPlacments[i].GetComponent<FixedJoint>() == null)
+                {
+                    FixedJoint joint = handPlacments[i].gameObject.AddComponent<FixedJoint>();
+                    joint.connectedBody = GameManager.Instance.KeyboardPlayer.grabHands[i].GetComponent<Rigidbody>();
+                    handPlacments[i].gameObject.transform.position = handPlacments[i].transform.position;
+                    joint.autoConfigureConnectedAnchor = false;
+                    joint.connectedAnchor = Vector3.zero;
+                }
+            }
+        }
+
     }
 }
  
