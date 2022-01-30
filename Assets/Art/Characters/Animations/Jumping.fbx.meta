@@ -140,8 +140,8 @@ ModelImporter:
       name: Hangtime
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 27
-      lastFrame: 37
+      firstFrame: 38
+      lastFrame: 41
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -169,7 +169,7 @@ ModelImporter:
       name: Landing
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 40
+      firstFrame: 46
       lastFrame: 71
       wrapMode: 0
       orientationOffsetY: 0
