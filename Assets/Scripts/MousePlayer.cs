@@ -120,6 +120,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
             transformations[t.TransformationForm] = t;
             t.gameObject.SetActive(false);
         }
+
+        Cursor.visible = false;
     }
 
     // Update is called once per frame
