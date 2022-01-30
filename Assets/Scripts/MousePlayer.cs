@@ -4,6 +4,7 @@ using UnityEngine;
 using DavidFDev.Tweening;
 using DavidFDev.Audio;
 using DavidFDev.Maths;
+using System.Collections;
 
 [RequireComponent(typeof(Rigidbody))]
 public class MousePlayer : MonoBehaviour, IPlayer
@@ -19,11 +20,18 @@ public class MousePlayer : MonoBehaviour, IPlayer
     [SerializeField] private SpriteRenderer defaultRenderer;
     private Tween _untransformTween;
     private Tween _flipTween;
+
+    private bool _inLava;
     
     public bool IsMovementDisabled { get; set; }
 
     public void Interact()
     {
+        if (_inLava)
+        {
+            return;
+        }
+
         if (Input.GetMouseButtonDown(0))
         {
             // Check for form-switcher
@@ -94,7 +102,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
         mousePosition.z = transform.position.z - Camera.main.transform.position.z;
         Vector3 worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
         worldPos.z = zposition;
-        rb.MovePosition(transform.position + (worldPos - transform.position) * Time.deltaTime * speed);
+        rb.MovePosition(transform.position + (worldPos - transform.position) * Time.deltaTime * speed * (_inLava ? 0.2f : 1f));
 
         // Rotate animation
         UpdateRotateAnimation();
@@ -179,5 +187,51 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 }
             }
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Hazard") && CurrentTransformation == null)
+        {
+            StartCoroutine(LavaEvent());
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Hazard"))
+        {
+            defaultRenderer.color = Color.white;
+            _inLava = false;
+        }
+    }
+
+    private IEnumerator LavaEvent()
+    {
+        _inLava = true;
+        IsMovementDisabled = true;
+
+        Audio.PlaySfx(GameManager.GetSfx("SFX_MouseScream"));
+
+        defaultRenderer.TweenColour(Color.white, new Color(1f, 155f / 255f, 128f / 255f), 1.4f, Ease.SineOut);
+        transform.TweenY(transform.position.y, transform.position.y - 0.6f, 3.4f, Ease.QuadIn);
+
+        float wait = 3.4f;
+        while (wait > 0f)
+        {
+            Vector3 r = defaultRenderer.transform.localEulerAngles;
+            r.z = MathsHelper.Pulse(Time.time, 0.7f, 0f, 20f) - 10f;
+            defaultRenderer.transform.localEulerAngles = r;
+            yield return null;
+            wait -= Time.deltaTime;
+        }
+
+        if (!_inLava)
+        {
+            defaultRenderer.color = Color.white;
+        }
+
+        _inLava = false;
+        IsMovementDisabled = false;
     }
 }
