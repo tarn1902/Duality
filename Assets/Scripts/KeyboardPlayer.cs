@@ -1,3 +1,4 @@
+using DavidFDev.Audio;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 
 
     private bool isRagdoll = false;
+    private bool isDead = false;
     private Vector3 movingDirection = Vector3.zero;
     private Direction direction = Direction.none;
     private bool isJustLanded = true;
@@ -63,8 +65,8 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 
             FaceDirection();
 
-            if (transform.position.y < -deathFallDistance)
-                RagdollOn();
+            //if (transform.position.y < -deathFallDistance)
+            //    RagdollOn();
 
         }
 
@@ -72,10 +74,10 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         {
             if (Input.GetButtonDown("Jump"))
             {
-                if (transform.position.y < -deathFallDistance)
+                if (isDead)
                 {
                     GameManager.Instance.Respawn();
-                    
+                    isDead = false;
                 }
                 else
                 {
@@ -245,6 +247,14 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     
     void MouseControllerReaction()
     {
+        if (Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position) > 5.5f)
+        {
+            headLook.weight = 0;
+            rightReach.weight = 0;
+            leftReach.weight = 0;
+            return;
+        }
+
         if ((transform.position.x < GameManager.Instance.MousePlayer.transform.position.x && direction == Direction.right) || (transform.position.x > GameManager.Instance.MousePlayer.transform.position.x && direction == Direction.left) || direction == Direction.none)
         {
             headLook.weight = headLookRange / Vector3.Distance(transform.position, GameManager.Instance.MousePlayer.transform.position);
@@ -268,6 +278,22 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             {
                 isTopOfLadder = false;
             }
+        }
+
+        // Die when touching a hazard
+        if (other.CompareTag("Hazard"))
+        {
+            isDead = true;
+
+            RagdollOn();
+
+            foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
+            {
+                rb.AddForce(Vector3.up * 15f, ForceMode.Impulse);
+            }
+
+            Audio.PlaySfx(GameManager.GetSfx("SFX_DeathScream"));
+            Audio.PlaySfx(GameManager.GetSfx("SFX_DeathSizzle"));
         }
     }
 

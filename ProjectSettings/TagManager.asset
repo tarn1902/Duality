@@ -8,6 +8,7 @@ TagManager:
   - Pendulum
   - KeyboardPlayer
   - MousePlayer
+  - Hazard
   layers:
   - Default
   - TransparentFX
