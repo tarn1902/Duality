@@ -33,6 +33,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     private bool isMovingUpLadder = false;
     private bool isTopOfLadder = false;
     bool justJumpedFromPendulum = false;
+    private GameObject lastPendulumn = null;
     
 
 
@@ -156,6 +157,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
                 anim.SetBool("IsLanding", true);
                 isJustLanded = true;
                 justJumpedFromPendulum = false;
+                lastPendulumn = null;
             }
             if (Input.GetButtonDown("Jump"))
             {
@@ -169,6 +171,11 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             {
                 movingDirection.y = ladderPopSpeed;
                 isTopOfLadder = false;
+            }
+            else if (justJumpedFromPendulum)
+            {
+                movingDirection.y = ladderPopSpeed;
+                justJumpedFromPendulum = false;
             }
             movingDirection.y -= gravity * Time.deltaTime;
             anim.SetBool("IsFalling", true);
@@ -325,9 +332,9 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         }
     }
 
-    public void AttachPlayer(Rigidbody[] handPlacments)
+    public void AttachPlayer(Rigidbody[] handPlacments, GameObject pendulmn)
     {
-        if (!justJumpedFromPendulum)
+        if (lastPendulumn == null || lastPendulumn != pendulmn)
         {
             GameManager.Instance.KeyboardPlayer.RagdollOn();
             joints = handPlacments;
@@ -342,6 +349,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
                     joint.connectedAnchor = Vector3.zero;
                 }
             }
+            lastPendulumn = pendulmn;
         }
 
     }
