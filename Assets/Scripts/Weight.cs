@@ -1,3 +1,4 @@
+using DavidFDev.Audio;
 using System.Linq;
 using UnityEngine;
 
@@ -48,6 +49,8 @@ public sealed class Weight : Transformation
         pos.z = MousePlayer.transform.position.z;
         MousePlayer.transform.position = pos;
         MousePlayer.IsMovementDisabled = true;
+
+        Audio.PlaySfx(GameManager.GetSfx("SFX_WeightAdd"));
     }
 
     protected override void OnAbilityDisabled()
@@ -58,6 +61,8 @@ public sealed class Weight : Transformation
             _weighingDownObj.EndControl();
             _weighingDownObj = null;
             MousePlayer.IsMovementDisabled = false;
+
+            Audio.PlaySfx(GameManager.GetSfx("SFX_WeightRemove"));
         }
     }
 

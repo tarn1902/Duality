@@ -131,6 +131,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Accel>k__BackingField: 30
   <MaxAccel>k__BackingField: 200
+  <KickbackRequiredVel>k__BackingField: 0.05
+  <KickbackDistance>k__BackingField: 1.8
+  <KickbackDuration>k__BackingField: 0.8
+  <KickbackAnimation>k__BackingField: 5
 --- !u!212 &6251630765422196175
 SpriteRenderer:
   m_ObjectHideFlags: 0
