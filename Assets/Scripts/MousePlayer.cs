@@ -1,5 +1,4 @@
 using System.Linq;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DavidFDev.Tweening;
@@ -137,6 +136,7 @@ public class MousePlayer : MonoBehaviour, IPlayer
 
     private void UpdateRotateAnimation()
     {
+        // Rotate a little bit along with the horizontal movement speed
         Transform t = CurrentTransformation == null ? defaultRenderer.transform : CurrentTransformation.transform;
         Vector3 euler = t.localEulerAngles;
         euler.z = MathsHelper.Map01(Mathf.Abs(rb.velocity.x), 0f, speed * 2f) * 20f * -Mathf.Sign(rb.velocity.x);
