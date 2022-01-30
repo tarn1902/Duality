@@ -16,6 +16,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float deathFallDistance = 0;
     [SerializeField] float ladderPopSpeed = 10;
     [SerializeField] float pendulumPopSpeed = 10;
+    [SerializeField] float lavaPopSpeed = 9f;
     [SerializeField] TwoBoneIKConstraint rightReach = null;
     [SerializeField] TwoBoneIKConstraint leftReach = null;
     [SerializeField] MultiAimConstraint headLook = null;
@@ -307,7 +308,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 
             foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
             {
-                rb.AddForce(Vector3.up * 9f, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * lavaPopSpeed, ForceMode.Impulse);
             }
 
             Audio.PlaySfx(GameManager.GetSfx("SFX_DeathScream"));
