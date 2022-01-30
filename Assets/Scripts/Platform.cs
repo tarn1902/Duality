@@ -1,3 +1,4 @@
+using DavidFDev.Tweening;
 using UnityEngine;
 
 public sealed class Platform : Transformation
@@ -5,6 +6,10 @@ public sealed class Platform : Transformation
     #region Fields
 
     private float _fallSpeed;
+
+    private bool _playerWasOnPlatform;
+
+    private Tween _kickTween;
 
     #endregion
 
@@ -17,6 +22,18 @@ public sealed class Platform : Transformation
 
     [field: SerializeField]
     public float MaxAccel { get; private set; } = 20f;
+
+    [field: SerializeField]
+    public float KickbackRequiredVel { get; private set; } = 0.05f;
+
+    [field: SerializeField]
+    public float KickbackDistance { get; private set; } = 2.5f;
+
+    [field: SerializeField]
+    public float KickbackDuration { get; private set; } = 1.8f;
+
+    [field: SerializeField]
+    public EaseType KickbackAnimation { get; private set; } = EaseType.QuadIn;
 
     #endregion
 
@@ -41,22 +58,42 @@ public sealed class Platform : Transformation
 
     protected override void OnUpdate()
     {
-        if (Vector3.Distance(MousePlayer.transform.position, GameManager.Instance.KeyboardPlayer.transform.position) < 1f &&
-            GameManager.Instance.KeyboardPlayer.transform.position.y > MousePlayer.transform.position.y)
+        if (IsPlayerStandingOn() && (!_kickTween?.IsActive ?? true))
         {
-            MousePlayer.IsMovementDisabled = true;
-            MousePlayer.GetComponent<Collider>().isTrigger = false;
+            if (!MousePlayer.IsMovementDisabled)
+            {
+                MousePlayer.IsMovementDisabled = true;
+                MousePlayer.GetComponent<Collider>().isTrigger = false;
+                _playerWasOnPlatform = true;
+            }
 
-            // Move down
+            // Move down under weight
             _fallSpeed = Mathf.Min(MaxAccel, _fallSpeed + (Accel * Time.deltaTime));
             MousePlayer.GetComponent<Rigidbody>().MovePosition(MousePlayer.transform.position + Vector3.down * _fallSpeed * Time.deltaTime);
         }
-        else
+        else if (_playerWasOnPlatform)
         {
-            MousePlayer.IsMovementDisabled = false;
             MousePlayer.GetComponent<Collider>().isTrigger = true;
             _fallSpeed = 0f;
+            _playerWasOnPlatform = false;
+
+            CharacterController cc = GameManager.Instance.KeyboardPlayer.GetComponent<CharacterController>();
+            if (cc.velocity.y > KickbackRequiredVel)
+            {
+                _kickTween?.Stop();
+                _kickTween = MousePlayer.transform.TweenY(MousePlayer.transform.position.y, MousePlayer.transform.position.y - KickbackDistance, KickbackDuration, KickbackAnimation.GetEasingFunction(), true, null, () => MousePlayer.IsMovementDisabled = false);
+            }
+            else
+            {
+                MousePlayer.IsMovementDisabled = false;
+            }
         }
+    }
+
+    private bool IsPlayerStandingOn()
+    {
+        return Vector3.Distance(MousePlayer.transform.position, GameManager.Instance.KeyboardPlayer.transform.position) < 1f &&
+            GameManager.Instance.KeyboardPlayer.transform.position.y > MousePlayer.transform.position.y;
     }
 
     #endregion

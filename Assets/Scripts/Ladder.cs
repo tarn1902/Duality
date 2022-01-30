@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DavidFDev.Tweening;
+using DavidFDev.Audio;
 
 [RequireComponent(typeof(BoxCollider))]
 public sealed class Ladder : Transformation
@@ -11,6 +12,8 @@ public sealed class Ladder : Transformation
     private readonly List<GameObject> _ladder = new List<GameObject>();
 
     private BoxCollider _collider;
+
+    private Collider _startCollider;
 
     #endregion
 
@@ -51,13 +54,22 @@ public sealed class Ladder : Transformation
     protected override void OnAbilityEnabled()
     {
         // Check for initial valid placement area
+        if (!CanBeginLadder(out Vector3 pos))
+        {
+            return;
+        }
 
         // Place ladder 
-        PlaceLadder(MousePlayer.transform.position);
+        PlaceLadder(pos);
     }
 
     protected override void OnAbilityDisabled()
     {
+        if (!_ladder.Any())
+        {
+            return;
+        }
+
         RemoveLadder();
     }
 
@@ -77,7 +89,7 @@ public sealed class Ladder : Transformation
         {
             AddToLadder(LadderPiece, pos);
             pos.y -= 0.5f;
-        } while (!IsSolid(pos, out _) && _ladder.Count < MaxLength);
+        } while (!IsSolid(pos, _startCollider, out _) && _ladder.Count < MaxLength);
 
         // Place bottom piece
         pos.y += 0.5f;
@@ -89,6 +101,8 @@ public sealed class Ladder : Transformation
         MousePlayer.IsMovementDisabled = true;
         transform.localEulerAngles = Vector3.zero;
         GetComponent<SpriteRenderer>().enabled = false;
+
+        Audio.PlaySfx(GameManager.GetSfx("SFX_LadderBuild"));
     }
 
     private void RemoveLadder()
@@ -99,9 +113,12 @@ public sealed class Ladder : Transformation
         }
 
         _collider.enabled = false;
+        _startCollider = null;
 
         MousePlayer.IsMovementDisabled = false;
         GetComponent<SpriteRenderer>().enabled = true;
+
+        Audio.PlaySfx(GameManager.GetSfx("SFX_LadderDestroy"));
     }
 
     private void AddToLadder(GameObject prefab, Vector3 pos)
@@ -132,9 +149,15 @@ public sealed class Ladder : Transformation
         _collider.size = size;
     }
 
-    private bool IsSolid(Vector3 pos, out Collider result)
+    private bool IsSolid(Vector3 pos, Collider ignore, out Collider result)
     {
-        return (result = Physics.OverlapSphere(pos, 0.4f, SolidLayer.value).FirstOrDefault()) != null;
+        return (result = Physics.OverlapSphere(pos, 0.4f, SolidLayer.value).Where(x => x != ignore).FirstOrDefault()) != null;
+    }
+
+    private bool CanBeginLadder(out Vector3 pos)
+    {
+        pos = MousePlayer.transform.position;
+        return IsSolid(pos, null, out _startCollider);
     }
 
     #endregion
