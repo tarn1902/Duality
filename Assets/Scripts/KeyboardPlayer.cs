@@ -8,10 +8,12 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 {
     CharacterController cc = null;
     [SerializeField] float speed = 1;
+    [SerializeField] float climbSpeed = 1;
     [SerializeField] float jumpSpeed = 1;
     [SerializeField] float gravity = 10.0f;
     [SerializeField] float zposition = 0;
     [SerializeField] float deathFallDistance = 0;
+    [SerializeField] float ladderPopSpeed = 10;
     [SerializeField] TwoBoneIKConstraint rightReach = null;
     [SerializeField] TwoBoneIKConstraint leftReach = null;
     [SerializeField] MultiAimConstraint headLook = null;
@@ -22,6 +24,10 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 
     [SerializeField] ParticleSystem dropCloud = null;
     [SerializeField] Animator anim = null;
+
+    private bool isTouchingLadder = false;
+    private bool isMovingUpLadder = false;
+    private bool isTopOfLadder = false;
 
 
     enum Direction
@@ -35,7 +41,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     private bool isRagdoll = false;
     private Vector3 movingDirection = Vector3.zero;
     private Direction direction = Direction.none;
-    private bool isLanded = true;
+    private bool isJustLanded = true;
     public void Interact()
     {
 
@@ -45,39 +51,18 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     {
         if (!isRagdoll)
         {
-            if (cc.isGrounded)
-            {
-                if (!isLanded)
-                {
-                    dropCloud.Play();
-                    isLanded = true;
-                }
-                if (Input.GetButtonDown("Jump"))
-                    movingDirection.y = jumpSpeed;
-            }
-            else
-            {
-                movingDirection.y -= gravity * Time.deltaTime;
-                isLanded = false;
-            }
-            
-            movingDirection.x = Input.GetAxis("Horizontal") * speed;
-            anim.SetFloat("MovementDirection", (Input.GetAxis("Horizontal") + 1) / 2);
-            movingDirection.z = (zposition - transform.position.z) * speed;
-
+            Climbing();
+            Jump();
+            Move();
             cc.Move(movingDirection * Time.deltaTime);
-            if (movingDirection.x != 0)
-            {
-                transform.GetChild(0).transform.LookAt(transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, 0));
-                direction = Input.GetAxis("Horizontal") > 0 ? Direction.right : Direction.left;
-            }
-            else
-            {
-                transform.GetChild(0).transform.LookAt(transform.position + new Vector3(0, 0, -1));
-                direction = Direction.none;
-            }
-                
+
+            FaceDirection();
+
+            if (transform.position.y < -deathFallDistance)
+                RagdollOn();
+
         }
+
         else
         {
             if (Input.GetButtonDown("Jump"))
@@ -85,10 +70,8 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
                 transform.position = Vector3.zero;
                 RagdollOff();
             }
-
         }
-        if (transform.position.y < -deathFallDistance)
-            RagdollOn();
+     
     }
 
     // Start is called before the first frame update
@@ -104,6 +87,98 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         Movement();
         Interact();
         MouseControllerReaction();
+    }
+
+    void Climbing()
+    {
+        if (isTouchingLadder)
+        {
+            Transformation t = GameManager.Instance.MousePlayer.CurrentTransformation;
+            if (t.TransformationForm != Transformation.Form.Ladder || !t.IsAbilityEnabled)
+            {
+                isTouchingLadder = false;
+            }
+
+            if (Input.GetAxis("Vertical") > 0 && cc.isGrounded)
+            {
+                isMovingUpLadder = true;
+                anim.SetBool("IsClimbing", true);
+            }
+
+            if (isMovingUpLadder)
+            {
+                movingDirection.y = Input.GetAxis("Vertical") * climbSpeed;
+                if (isTopOfLadder)
+                {
+                    isMovingUpLadder = false;
+                    anim.SetBool("IsClimbing", false) ;
+
+                }
+            }
+        }
+    }
+
+    void Jump()
+    {
+        if (cc.isGrounded)
+        {
+            if (!isJustLanded)
+            {
+                dropCloud.Play();
+                anim.SetBool("IsFalling", false);
+                anim.SetBool("IsLanding", true);
+                isJustLanded = true;
+            }
+            if (Input.GetButtonDown("Jump"))
+            {
+                movingDirection.y = jumpSpeed;
+                anim.SetTrigger("OnJump");
+            }
+        }
+        else
+        {
+            if (isTopOfLadder)
+            {
+                movingDirection.y = ladderPopSpeed;
+                isTopOfLadder = false;
+            }
+            movingDirection.y -= gravity * Time.deltaTime;
+            anim.SetBool("IsFalling", true);
+            isJustLanded = false;
+            anim.SetBool("IsLanding", false);
+        }
+    }
+
+    void Move()
+    {
+        if (!isMovingUpLadder || (isMovingUpLadder && cc.isGrounded))
+        {
+            movingDirection.x = Input.GetAxis("Horizontal") * speed;
+            anim.SetFloat("MovementDirection", (Input.GetAxis("Horizontal") + 1) / 2);
+            movingDirection.z = (zposition - transform.position.z) * speed;
+        }
+        else
+        {
+            movingDirection.x = 0;
+        }
+    }
+
+    void FaceDirection()
+    {
+        if (isMovingUpLadder)
+        {
+            transform.GetChild(0).transform.LookAt(transform.position + new Vector3(0, 0, 1));
+        }
+        else if (movingDirection.x != 0)
+        {
+            transform.GetChild(0).transform.LookAt(transform.position + new Vector3(Input.GetAxis("Horizontal"), 0, 0));
+            direction = Input.GetAxis("Horizontal") > 0 ? Direction.right : Direction.left;
+        }
+        else
+        {
+            transform.GetChild(0).transform.LookAt(transform.position + new Vector3(0, 0, -1));
+            direction = Direction.none;
+        }
     }
 
     public void RagdollOn()
@@ -151,6 +226,32 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             headLook.weight = 0;
             rightReach.weight = 0;
             leftReach.weight = 0;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Ladder")
+        {
+            isTouchingLadder = true;
+            if (cc.isGrounded)
+            {
+                isTopOfLadder = false;
+            }
+        }
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Ladder")
+        {
+            if (!cc.isGrounded && movingDirection.x == 0)
+            {
+                isTopOfLadder = true;
+            }
+            isTouchingLadder = false;
+            isMovingUpLadder = false;
+            anim.SetBool("IsClimbing", false);
         }
     }
 }

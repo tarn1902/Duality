@@ -408,10 +408,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 5
-  jumpSpeed: 10
+  climbSpeed: 1
+  jumpSpeed: 5
   gravity: 10
   zposition: 0
   deathFallDistance: 10
+  ladderPopSpeed: 10
   rightReach: {fileID: 1810540680}
   leftReach: {fileID: 1357334545}
   headLook: {fileID: 1387584827}
@@ -3142,7 +3144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8028126324592633577, guid: a12ff6e70d482f64d8fc075217b628a7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8028126324592633577, guid: a12ff6e70d482f64d8fc075217b628a7, type: 3}
       propertyPath: m_LocalPosition.z
