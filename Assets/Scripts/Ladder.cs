@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using DavidFDev.Tweening;
+using DavidFDev.Audio;
 
 [RequireComponent(typeof(BoxCollider))]
 public sealed class Ladder : Transformation
@@ -89,6 +90,8 @@ public sealed class Ladder : Transformation
         MousePlayer.IsMovementDisabled = true;
         transform.localEulerAngles = Vector3.zero;
         GetComponent<SpriteRenderer>().enabled = false;
+
+        Audio.PlaySfx(GameManager.GetSfx("SFX_LadderBuild"));
     }
 
     private void RemoveLadder()
@@ -102,6 +105,8 @@ public sealed class Ladder : Transformation
 
         MousePlayer.IsMovementDisabled = false;
         GetComponent<SpriteRenderer>().enabled = true;
+
+        Audio.PlaySfx(GameManager.GetSfx("SFX_LadderDestroy"));
     }
 
     private void AddToLadder(GameObject prefab, Vector3 pos)

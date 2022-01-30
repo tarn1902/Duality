@@ -9,6 +9,14 @@ public sealed class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Static methods
+
+    public static string GetSfx(string fileName) => "Audio/SFX/" + fileName;
+
+    public static string GetClip(string fileName) => "Audio/Clips/" + fileName;
+
+    #endregion
+
     #region Properties
 
     public MousePlayer MousePlayer { get; private set; }
