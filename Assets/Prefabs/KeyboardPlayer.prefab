@@ -43,6 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14af1e79dab7a0548959a96cedbd8b7c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offsetZ: 5
 --- !u!1 &1156978950
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,15 +463,17 @@ MonoBehaviour:
   rightReach: {fileID: 1810540680}
   leftReach: {fileID: 1357334545}
   headLook: {fileID: 1387584827}
-  rightReachRange: 0.5
-  leftReachRange: 0.5
-  headLookRange: 1
+  rightReachRange: 0.1
+  leftReachRange: 0.1
+  headLookRange: 3
   dropCloud: {fileID: 5533683168533184337}
   anim: {fileID: 5528228549569368934}
   ragdollRoot: {fileID: 4694440234413688766}
   grabHands:
   - {fileID: 6329472550842951270}
   - {fileID: 4818859144859095995}
+  - {fileID: 2947377966641534887}
+  - {fileID: 6228085715505379095}
 --- !u!54 &918669093
 Rigidbody:
   m_ObjectHideFlags: 0

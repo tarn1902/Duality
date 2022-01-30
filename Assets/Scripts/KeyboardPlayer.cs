@@ -294,7 +294,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         {
             GameManager.Instance.KeyboardPlayer.RagdollOn();
             joints = handPlacments;
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < handPlacments.Length; i++)
             {
                 if (handPlacments[i].GetComponent<FixedJoint>() == null)
                 {
