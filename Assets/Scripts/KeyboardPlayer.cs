@@ -307,7 +307,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
 
             foreach (Rigidbody rb in GetComponentsInChildren<Rigidbody>())
             {
-                rb.AddForce(Vector3.up * 15f, ForceMode.Impulse);
+                rb.AddForce(Vector3.up * 9f, ForceMode.Impulse);
             }
 
             Audio.PlaySfx(GameManager.GetSfx("SFX_DeathScream"));
