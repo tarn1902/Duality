@@ -16,6 +16,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     [SerializeField] float deathFallDistance = 0;
     [SerializeField] float ladderPopSpeed = 10;
     [SerializeField] float pendulumPopSpeed = 10;
+    [SerializeField] Vector3 dropCloudPosition = Vector3.zero;
     [SerializeField] float lavaPopSpeed = 9f;
     [SerializeField] TwoBoneIKConstraint rightReach = null;
     [SerializeField] TwoBoneIKConstraint leftReach = null;
@@ -108,6 +109,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
     {
         cc = GetComponent<CharacterController>();
         RagdollOff();
+        dropCloud.transform.parent = null;
     }
 
     // Update is called once per frame
@@ -153,6 +155,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
         {
             if (!isJustLanded)
             {
+                dropCloud.transform.position = transform.position + dropCloudPosition;
                 dropCloud.Play();
                 anim.SetBool("IsFalling", false);
                 anim.SetBool("IsLanding", true);
