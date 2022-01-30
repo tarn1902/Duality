@@ -343,7 +343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bba35f0988f7af4b958ec7129ba8bbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <Music>k__BackingField: {fileID: 0}
+  <Music>k__BackingField: {fileID: 8300000, guid: 5e3643ac711972846a71ed2bb2d969cc, type: 3}
   <PlayOnAwake>k__BackingField: 1
 --- !u!1 &199141554
 GameObject:
