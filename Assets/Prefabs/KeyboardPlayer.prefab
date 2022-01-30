@@ -452,14 +452,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7fac040b6a3f5546bbcddc5d900bd07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 5.5
   climbSpeed: 1
-  jumpSpeed: 5
-  gravity: 10
+  jumpSpeed: 7
+  gravity: 20
   zposition: 0
   deathFallDistance: 10
   ladderPopSpeed: 10
   pendulumPopSpeed: 10
+  lavaPopSpeed: 13
   rightReach: {fileID: 1810540680}
   leftReach: {fileID: 1357334545}
   headLook: {fileID: 1387584827}
