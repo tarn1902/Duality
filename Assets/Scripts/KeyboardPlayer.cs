@@ -89,6 +89,7 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
                 {
                     GameManager.Instance.Respawn();
                     isDead = false;
+                    speed = default;
                 }
                 else
                 {
