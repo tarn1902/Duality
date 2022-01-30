@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public sealed class GameManager : MonoBehaviour
 {
@@ -14,6 +15,12 @@ public sealed class GameManager : MonoBehaviour
     public static string GetSfx(string fileName) => "Audio/SFX/" + fileName;
 
     public static string GetClip(string fileName) => "Audio/Clips/" + fileName;
+
+    #endregion
+
+    #region Fields
+
+    private bool _loading;
 
     #endregion
 
@@ -64,6 +71,20 @@ public sealed class GameManager : MonoBehaviour
         GameObject o;
         MousePlayer = (o = GameObject.FindWithTag("MousePlayer")) != null ? o.GetComponent<MousePlayer>() : throw new NullReferenceException(nameof(MousePlayer));
         KeyboardPlayer = (o = GameObject.FindWithTag("KeyboardPlayer")) != null ? o.GetComponent<KeyboardPlayer>() : throw new NullReferenceException(nameof(KeyboardPlayer));
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (_loading)
+            {
+                return;
+            }
+
+            SceneManager.LoadScene(0);
+            _loading = true;
+        }
     }
 
     private void OnDestroy()
