@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70ebfd48c448a5643b529be60184a145, type: 3}
+  m_Name: SFX_Jump
+  m_EditorClassIdentifier: 
+  <Clips>k__BackingField:
+  - {fileID: 8300000, guid: d9d586b422ae3cf4399a62e1b593af6e, type: 3}
+  <SmartRandom>k__BackingField: 0
+  <Output>k__BackingField: {fileID: 7079742898997272617, guid: d2054c5e84487b64491807171d6af96b, type: 2}
+  <MinVolume>k__BackingField: 1
+  <MaxVolume>k__BackingField: 1
+  <MinPitch>k__BackingField: 1
+  <MaxPitch>k__BackingField: 1
+  <Loop>k__BackingField: 0
+  <Priority>k__BackingField: 128
+  <StereoPan>k__BackingField: 0
+  <SpatialBlend>k__BackingField: 0
