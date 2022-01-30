@@ -44,6 +44,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
                     _untransformTween.Stop();
                     _untransformTween.Start();
 
+                    Audio.PlaySfx(GameManager.GetSfx("SFX_Untransform"));
+
                     return;
                 }
 
@@ -62,6 +64,8 @@ public class MousePlayer : MonoBehaviour, IPlayer
                 // Enable new transformation
                 currentTransformation = transformations[switcher.SwitchTo];
                 currentTransformation.EnableTransformation();
+
+                Audio.PlaySfx(GameManager.GetSfx("SFX_Transform"));
 
                 defaultRenderer.enabled = false;
                 _flipTween?.Stop();

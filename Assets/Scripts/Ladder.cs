@@ -65,6 +65,11 @@ public sealed class Ladder : Transformation
 
     protected override void OnAbilityDisabled()
     {
+        if (!_ladder.Any())
+        {
+            return;
+        }
+
         RemoveLadder();
     }
 
