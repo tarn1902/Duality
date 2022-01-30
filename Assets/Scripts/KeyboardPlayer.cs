@@ -161,6 +161,8 @@ public class KeyboardPlayer : MonoBehaviour, IPlayer
             {
                 movingDirection.y = jumpSpeed;
                 anim.SetTrigger("OnJump");
+
+                Audio.PlaySfx(GameManager.GetSfx("SFX_Jump"));
             }
         }
         else
