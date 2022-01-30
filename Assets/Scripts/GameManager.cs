@@ -40,6 +40,7 @@ public sealed class GameManager : MonoBehaviour
     {
         Vector3 pos = CurrentCheckpoint == null ? Vector3.zero : CurrentCheckpoint.RespawnTransform.position;
         pos.y += 1f;
+        pos.z = KeyboardPlayer.transform.position.z;
         KeyboardPlayer.transform.position = pos;
     }
 
